@@ -1,0 +1,84 @@
+{
+  "name": "test-debugger",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/test-debugger/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/webpack:webpack",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "compiler": "babel",
+        "outputPath": "dist/apps/test-debugger",
+        "index": "apps/test-debugger/src/index.html",
+        "baseHref": "/",
+        "main": "apps/test-debugger/src/main.tsx",
+        "polyfills": "apps/test-debugger/src/polyfills.ts",
+        "tsConfig": "apps/test-debugger/tsconfig.app.json",
+        "assets": [
+          "apps/test-debugger/src/favicon.ico",
+          "apps/test-debugger/src/assets"
+        ],
+        "styles": [],
+        "scripts": [],
+        "webpackConfig": "@nrwl/react/plugins/webpack"
+      },
+      "configurations": {
+        "development": {
+          "extractLicenses": false,
+          "optimization": false,
+          "sourceMap": true,
+          "vendorChunk": true
+        },
+        "production": {
+          "fileReplacements": [
+            {
+              "replace": "apps/test-debugger/src/environments/environment.ts",
+              "with": "apps/test-debugger/src/environments/environment.prod.ts"
+            }
+          ],
+          "optimization": true,
+          "outputHashing": "all",
+          "sourceMap": false,
+          "namedChunks": false,
+          "extractLicenses": true,
+          "vendorChunk": false
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nrwl/webpack:dev-server",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "test-debugger:build",
+        "hmr": true
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "test-debugger:build:development"
+        },
+        "production": {
+          "buildTarget": "test-debugger:build:production",
+          "hmr": false
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/test-debugger/**/*.{ts,tsx,js,jsx}"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/apps/test-debugger"],
+      "options": {
+        "jestConfig": "apps/test-debugger/jest.config.ts",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}
